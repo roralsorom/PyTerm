@@ -1,11 +1,11 @@
 # Installation:
 ```
-pip install PyTerm
+pip install PyTerms
 ```
 
 # Usage Example:
 ```py
-from PyTerm import PyTerm
+from PyTerms import PyTerm
 
 PyTerm.clear()
 PyTerm.set_title("Whow ! Work on Linux and Windows, also support | :o")
