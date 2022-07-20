@@ -1,6 +1,7 @@
-import os, threading
+import os, threading, ctypes
 
 __lock__ = threading.RLock()
+
 
 class PyTerm:
     """Access to all PyTerm methods."""
@@ -15,9 +16,9 @@ class PyTerm:
 
         if title.isdigit():
             raise ValueError('title must be a string')
-        
+
         if os.name == 'nt':
-            os.system(f'title {title}'.replace('|', '^|'))
+            ctypes.windll.kernel32.SetConsoleTitleW(title)
         else:
             print(f'\33]0;{title}\a', end='', flush=True)
 
@@ -29,9 +30,9 @@ class PyTerm:
             content (str): Text to display
         """
 
-        with  __lock__:
+        with __lock__:
             print(content)
-    
+
     @staticmethod
     def clear():
         """Clears the console on Linux and Windows.
