@@ -9,19 +9,19 @@ class PyTerm:
     """Access to all PyTerm methods."""
 
     @staticmethod
-    def start_threads(threads: int, func: callable, args: tuple):
+    def start_threads(threads: int, func: callable, args: list):
         """Start a certain amount of threads on a specific function
         
         Args:
             threads (int): Amount of threads to run
             func (callable): Function to thread
-            args (tuple): Arguments to pass to the function
+            args (list): Arguments to pass to the function
         
         Example:
             start_threads(
                 threads = 3,
                 func = myfunction,
-                args = (arg1, arg2, arg3)
+                args = [arg1, arg2, arg3]
             )
         """
 
