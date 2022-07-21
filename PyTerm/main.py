@@ -1,10 +1,34 @@
-import os, threading, ctypes
+import os
+import ctypes
+import threading
 
 __lock__ = threading.RLock()
 
 
 class PyTerm:
     """Access to all PyTerm methods."""
+
+    @staticmethod
+    def start_threads(threads: int, func: callable, args: tuple):
+        """Start a certain amount of threads on a specific function
+        
+        Args:
+            threads (int): Amount of threads to run
+            func (callable): Function to thread
+            args (tuple): Arguments to pass to the function
+        
+        Example:
+            start_threads(
+                threads = 3,
+                func = myfunction,
+                args = (arg1, arg2, arg3)
+            )
+        """
+
+        for _ in range(threads):
+            thread = threading.Thread(target=func, args=args)
+            thread.start()
+    startThreads = start_threads
 
     @staticmethod
     def set_title(title: str):
@@ -14,24 +38,25 @@ class PyTerm:
             title (str): New title of the console
         """
 
-        if title.isdigit():
+        if not isinstance(title, str):
             raise ValueError('title must be a string')
 
         if os.name == 'nt':
             ctypes.windll.kernel32.SetConsoleTitleW(title)
         else:
             print(f'\33]0;{title}\a', end='', flush=True)
+    setTitle = set_title
 
     @staticmethod
-    def prints(content: str):
+    def prints(*content: str):
         """Display text in the console while preventing jerks.
 
         Args:
-            content (str): Text to display
+            *content (str): Text to display
         """
 
         with __lock__:
-            print(content)
+            print(" ".join(map(str, content)))
 
     @staticmethod
     def clear():
@@ -41,4 +66,4 @@ class PyTerm:
             None
         """
 
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system('cls||clear')
