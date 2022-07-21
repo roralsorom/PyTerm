@@ -1,6 +1,6 @@
 # Installation:
 ```
-pip install PyTerms
+pip install PyTerms==0.0.2
 ```
 
 # Usage Example:
