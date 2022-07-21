@@ -2,7 +2,6 @@ import os, ctypes, threading, time
 
 __lock__ = threading.RLock()
 
-
 class PyTerm:
     """Access to all PyTerm methods."""
 
@@ -21,15 +20,17 @@ class PyTerm:
             start_threads(
                 threads = 3,
                 func = myfunction,
-                args = [arg1, arg2, arg3]
+                args = [arg1, arg2, arg3],
+                wait = True,
+                max_concurent = 100
             )
         """
         
-        activate = threading.active_count()
+        active_count = threading.active_count()
         thread_list = []
 
         for _ in range(threads):
-            while (threading.active_count() - activate) >= max_concurent and wait == False:
+            while (threading.active_count() - active_count) >= max_concurent and wait == False:
                 time.sleep(1)
 
             thread = threading.Thread(target=func, args=args)
