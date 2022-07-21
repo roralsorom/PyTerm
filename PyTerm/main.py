@@ -1,6 +1,4 @@
-import os
-import ctypes
-import threading
+import os, ctypes, threading, time
 
 __lock__ = threading.RLock()
 
@@ -9,13 +7,15 @@ class PyTerm:
     """Access to all PyTerm methods."""
 
     @staticmethod
-    def start_threads(threads: int, func: callable, args: list):
+    def start_threads(threads: int, func: callable, args: list, wait: bool= False, max_concurent: int=100):
         """Start a certain amount of threads on a specific function
         
         Args:
             threads (int): Amount of threads to run
             func (callable): Function to thread
             args (list): Arguments to pass to the function
+            wait (bool): If true, waits for threads to complete.
+            max_concurent (int): Maximum number of threads to execute simultaneously. WARNING: Work only if wait is disabled.
         
         Example:
             start_threads(
@@ -24,11 +24,26 @@ class PyTerm:
                 args = [arg1, arg2, arg3]
             )
         """
+        
+        activate = threading.active_count()
+        thread_list = []
 
         for _ in range(threads):
+            while (threading.active_count() - activate) >= max_concurent and wait == False:
+                time.sleep(1)
+
             thread = threading.Thread(target=func, args=args)
-            thread.start()
-    startThreads = start_threads
+            thread_list.append(thread)
+
+            if wait == False:
+                thread.start()
+        
+        if wait:
+            for thread in thread_list:
+                thread.start()
+
+            for thread in thread_list:
+                thread.join()
 
     @staticmethod
     def set_title(title: str):
