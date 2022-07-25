@@ -1,13 +1,33 @@
-# Installation:
+# 📂 Installation:
+
 ```
-pip install PyTerms==0.0.2
+🛑 Lasted:
+  pip install git+https://github.com/Its-Vichy/PyTerm.git
+
+✅ Stable from pypi:
+  pip install PyTerms==0.0.2
 ```
 
-# Usage Example:
+# 📝 Basic example:
+
 ```py
-from PyTerms import PyTerm as pt
+from PyTerm import PyTerm
+import time
 
-pt.clear()
-pt.set_title("Whow ! Work on Linux and Windows, also support | :o")
-pt.prints("WoW i can make lot of thread to write this line and they never make shit on my terminal :o")
+def printFunction(text: str):
+    
+    # print-secure with Rlock in multiple thread
+    PyTerm.prints(text)
+    time.sleep(1)
+
+if __name__ == '__main__':
+    
+    # clear the console
+    PyTerm.clear()
+    
+    # set console title
+    PyTerm.set_title("Basic example | PyTerm Work on windows and linux !")
+
+    # start 5 threads with 2 max concurent worker:
+    PyTerm.start_threads(5, printFunction, ["uwu"], False, 2)
 ```
