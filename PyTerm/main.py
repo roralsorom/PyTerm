@@ -2,9 +2,9 @@ import os, ctypes, threading, time, sys
 
 __lock__ = threading.RLock()
 
-class PyTerm:
-    """Access to all PyTerm methods."""
-
+class Concurrencies:
+    """ Methods related to threads and concurrencies """
+    
     @staticmethod
     def start_threads(threads: int, func: callable, args: list, wait: bool= False, max_concurent: int=100):
         """Start a certain amount of threads on a specific function
@@ -47,6 +47,20 @@ class PyTerm:
                 thread.join()
 
     @staticmethod
+    def print_s(*content: str):
+        """Display text in the console while preventing jerks.
+
+        Args:
+            *content (str): Text to display
+        """
+
+        with __lock__:
+            print(" ".join(map(str, content)))
+
+class Console:
+    """ Methods related to terminal and command prompt """
+    
+    @staticmethod
     def set_title(title: str):
         """Changing the console title on Linux and Windows.
 
@@ -61,17 +75,6 @@ class PyTerm:
             ctypes.windll.kernel32.SetConsoleTitleW(title)
         else:
             print(f'\33]0;{title}\a', end='', flush=True)
-
-    @staticmethod
-    def prints(*content: str):
-        """Display text in the console while preventing jerks.
-
-        Args:
-            *content (str): Text to display
-        """
-
-        with __lock__:
-            print(" ".join(map(str, content)))
 
     @staticmethod
     def clear():
@@ -120,3 +123,31 @@ class PyTerm:
         for line in sys.stdin:
             return line.rstrip()
             break
+    
+    @staticmethod
+    def read_all_stdin(remove_duplicate: bool = False):
+        """Read all lines of STD-IN and return a list
+        
+        Args:
+            remove_duplicate (bool): Remove all duplicated lines
+        """
+
+        lines = []
+        
+        for line in sys.stdin:
+            lines.append(line)
+        
+        return lines if not remove_duplicate else list(set(lines))
+
+    @staticmethod
+    def forward_stdin(func: callable, args: list = None):
+        """Execute function on each line from stdin
+        
+        Args:
+            func(line: str, ..other_args) (callable): Function to execute, this function must take line at the first parameter
+            args (int): Other args to add into the function.
+        """
+        
+        for line in sys.stdin:
+            line = line.strip()
+            Concurrencies.start_threads(1, func, args.insert(0, line) if args != None else [line], False)

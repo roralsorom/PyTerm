@@ -11,23 +11,36 @@
 # 📝 Basic example:
 
 ```py
-from PyTerm import PyTerm
+from PyTerm import Console, Concurrencies
 import time
 
 def printFunction(text: str):
     
     # print-secure with Rlock in multiple thread
-    PyTerm.prints(text)
+    Concurrencies.print_s(text)
     time.sleep(1)
 
 if __name__ == '__main__':
-    
     # clear the console
-    PyTerm.clear()
+    Console.clear()
     
     # set console title
-    PyTerm.set_title("Basic example | PyTerm Work on windows and linux !")
-
+    Console.set_title("Basic example | PyTerm Work on windows and linux !")
+    
     # start 5 threads with 2 max concurent worker:
-    PyTerm.start_threads(5, printFunction, ["uwu"], False, 2)
+    Concurrencies.start_threads(5, printFunction, ["uwu"], False, 2)
+```
+
+```py
+from PyTerm import Console, Concurrencies
+import time
+
+def printLine(line: str):
+    Concurrencies.print_s(line)
+
+if __name__ == '__main__':
+    # This function will be executed on each line send into the STDIN.
+    # Ex: cat file.txt | python3 script.py
+
+    Console.forward_stdin(printLine)
 ```
