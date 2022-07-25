@@ -5,9 +5,9 @@ pip install PyTerms==0.0.2
 
 # Usage Example:
 ```py
-from PyTerms import PyTerm
+from PyTerms import PyTerm as pt
 
-PyTerm.clear()
-PyTerm.set_title("Whow ! Work on Linux and Windows, also support | :o")
-PyTerm.prints("WoW i can make lot of thread to write this line and they never make shit on my terminal :o")
+pt.clear()
+pt.set_title("Whow ! Work on Linux and Windows, also support | :o")
+pt.prints("WoW i can make lot of thread to write this line and they never make shit on my terminal :o")
 ```
