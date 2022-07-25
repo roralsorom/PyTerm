@@ -83,3 +83,41 @@ class PyTerm:
         """
 
         os.system('cls||clear')
+
+    @staticmethod
+    def getChar():
+        """Get an char form user without pressing return
+        
+        Args:
+            None
+        """
+        try:
+            # for Windows
+            import msvcrt
+            return msvcrt.getch()
+
+        except ImportError:
+            # for linux (with termios & tty support)
+            import tty, sys, termios
+
+            fd = sys.stdin.fileno()
+            oldSettings = termios.tcgetattr(fd)
+
+            try:
+                tty.setcbreak(fd)
+                answer = sys.stdin.read(1)
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, oldSettings)
+
+            return answer
+
+    @staticmethod
+    def input():
+        """Input but dosnt take any args
+        
+        Args:
+            None
+        """
+        for line in sys.stdin:
+            return line.rstrip()
+            break
