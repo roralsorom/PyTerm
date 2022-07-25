@@ -5,7 +5,7 @@
   pip install git+https://github.com/Its-Vichy/PyTerm.git
 
 ✅ Stable from pypi:
-  pip install PyTerms==0.0.2
+  pip install PyTerms==0.0.3
 ```
 
 # 📝 Basic example:
