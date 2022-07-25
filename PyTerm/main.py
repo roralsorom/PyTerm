@@ -1,4 +1,4 @@
-import os, ctypes, threading, time
+import os, ctypes, threading, time, sys
 
 __lock__ = threading.RLock()
 
@@ -61,7 +61,6 @@ class PyTerm:
             ctypes.windll.kernel32.SetConsoleTitleW(title)
         else:
             print(f'\33]0;{title}\a', end='', flush=True)
-    setTitle = set_title
 
     @staticmethod
     def prints(*content: str):
@@ -85,8 +84,8 @@ class PyTerm:
         os.system('cls||clear')
 
     @staticmethod
-    def getChar():
-        """Get an char form user without pressing return
+    def get_char():
+        """Get first pressed keyboard char form user without pressing return
         
         Args:
             None
@@ -94,7 +93,7 @@ class PyTerm:
         try:
             # for Windows
             import msvcrt
-            return msvcrt.getch()
+            return msvcrt.getch().decode('utf-8')
 
         except ImportError:
             # for linux (with termios & tty support)
@@ -112,8 +111,8 @@ class PyTerm:
             return answer
 
     @staticmethod
-    def input():
-        """Input but dosnt take any args
+    def read_stdin():
+        """Read first line of STD-IN
         
         Args:
             None
