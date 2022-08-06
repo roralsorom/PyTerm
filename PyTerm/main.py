@@ -61,6 +61,11 @@ class Console:
     """ Methods related to terminal and command prompt """
     
     @staticmethod
+    def center_text(text: str):
+        columns = os.get_terminal_size()[0]
+        return print(text.center(columns))
+    
+    @staticmethod
     def set_title(title: str):
         """Changing the console title on Linux and Windows.
 
