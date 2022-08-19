@@ -76,10 +76,7 @@ class Console:
         if not isinstance(title, str):
             raise ValueError('title must be a string')
 
-        if os.name == 'nt':
-            ctypes.windll.kernel32.SetConsoleTitleW(title)
-        else:
-            print(f'\33]0;{title}\a', end='', flush=True)
+        ctypes.windll.kernel32.SetConsoleTitleW(title) if os.name == 'nt' else print(f'\33]0;{title}\a', end='', flush=True)
 
     @staticmethod
     def clear():
