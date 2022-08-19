@@ -44,3 +44,7 @@ if __name__ == '__main__':
 
     Console.forward_stdin(printLine)
 ```
+
+[![Downloads](https://pepy.tech/badge/pyterms)](https://pepy.tech/project/pyterms)
+[![Downloads](https://pepy.tech/badge/pyterms/month)](https://pepy.tech/project/pyterms)
+[![Downloads](https://pepy.tech/badge/pyterms/week)](https://pepy.tech/project/pyterms)
